@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import XPLogo from './assets/SVG/XPLogo';
 import {
   XPApp,
@@ -15,38 +15,50 @@ import {
 import SendButton from './SendButton';
 import XPTable, { XPTableStyles } from './XPTable';
 
+const maxCount = 50;
 const maxAmount = 2000000000000000;
 const url = 'http://localhost:6644'
 
+const columns = [
+  {
+    Header: 'Timestamp',
+    accessor: 'timestamp'
+  },
+  {
+    Header: 'Target Address',
+    accessor: 'address'
+  },
+  {
+    Header: 'XPNET',
+    accessor: 'value'
+  },
+];
+
 function App() {
 
+  const [fire, setFire] = useState(false);
   const [sendInactive, setSendInactive] = useState(false);
   const [amount, setAmount] = useState(maxAmount);
-  const [account, setAccount] = useState('');
-  const [count, setCount] = useState(10);
+  const account = useRef();
   const [data, setData] = useState([]);
+  const [balance, setBalance] = useState(0);
 
-  fetch(`${url}/history/${count + 1}`)
-        .then(d => d.json())
-        .then(json => {
-          setData(json)
-        })
+  useEffect(
+    () => {
+      const init = async () => {
+        const breq = await fetch(`${url}/balance`);
+        const bdat = await breq.json();
+        setBalance(bdat['balance'])
 
-  const columns = useMemo(() => [
-    {
-      Header: 'Timestamp',
-      accessor: 'timestamp'
-    },
-    {
-      Header: 'Target Address',
-      accessor: 'address'
-    },
-    {
-      Header: 'XPNET',
-      accessor: 'value'
-    },
+        const histreq = await fetch(`${url}/history/${maxCount}`);
+        const hdat = await histreq.json();
+        setData(hdat);
+      }
 
-  ])
+      init();
+    },
+    [fire]
+  )
 
   const handleSendButtonClick = async () => {
     setSendInactive(true);
@@ -57,7 +69,7 @@ function App() {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "target": account, "amount": amount })
+      body: JSON.stringify({ "target": account.current.value, "amount": amount })
     });
     const content = await rawResponse.json();
 
@@ -65,15 +77,8 @@ function App() {
 
     if (content) {
       setSendInactive(false);
-      setCount(count + 1);
-
-      fetch(`${url}/history/${count + 1}`)
-        .then(d => d.json())
-        .then(json => {
-          setData(json)
-        })
-
     }
+    setFire(!fire);
   }
 
   const numberWithCommas = (x) => {
@@ -85,17 +90,11 @@ function App() {
   }
 
   const handleChangeAmount = (e) => {
-
     if (e.target.value && e.target.value <= maxAmount) {
       setAmount(e.target.value);
     } else {
       setAmount(maxAmount);
     }
-  }
-
-
-  const handleAccountChange = (e) => {
-    setAccount(e.target.value);
   }
 
 
@@ -118,7 +117,7 @@ function App() {
             <XPRow>
               <XPLabel>Faucet balance:</XPLabel>
               <XPTransaction
-                value={numberWithCommas(200000000000000000)}
+                value={numberWithCommas(balance)}
                 disabled
               ></XPTransaction>
             </XPRow>
@@ -143,8 +142,7 @@ function App() {
             <XPRow>
               <XPLabel>Target Account:</XPLabel>
               <XPTransaction
-                value={account}
-                onChange={handleAccountChange}
+                ref={account}
               ></XPTransaction>
 
             </XPRow>

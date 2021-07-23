@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 
@@ -45,7 +44,7 @@ const getFullTimestamp = (timestamp) => {
 const XPTable = ({columns, data}) => {
 
     data = data.map(record => {
-        return {... record, 
+        return {...record, 
             timestamp: getFullTimestamp(record.timestamp),
             value: record.value / 1000000000000000
         }
