@@ -35,3 +35,11 @@ To create a production build, use yarn build.
 The connected view should look like so:
 
 ![Backend is up](.//public/screens/BE_is_up.png)
+
+## Sending XPNET tokens to a test account
+
+1. Fill the "Target Account" field with your address hash. Like so:
+![Before transaction](.//public/screens/Before_sending.png)
+2. Press the SEND button. The topmost transaction must display the time of the transaction as well as the target address hash and the number of XPNET transamitted.
+![After the transaction](.//public/screens/After_sending.png)
+3. To avoid abuse, we have limited the amount the faucet sends to an arbitrary account to XPNET 2.0 per 24 hours.
