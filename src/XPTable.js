@@ -1,9 +1,12 @@
+// External imports
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 
+// CSS related constants
 const borderColor = "#374462";
 const borderRadius = "6px";
 
+// The table styles
 export const XPTableStyles = styled.div`
 
   table {
@@ -34,6 +37,12 @@ export const XPTableStyles = styled.div`
     }
   }
 `
+
+/**
+ * Accepts a timestamp and converts it to a human readable format
+ * @param {Number} timestamp the timestamp of the transaction as time elapsed from Jan,1 1970
+ * @returns a human readable formatted: "YYYY-MM-DD HH:MM:SS" string
+ */
 const getFullTimestamp = (timestamp) => {
     const pad = (n,s=2) => (`${new Array(s).fill(0)}${n}`).slice(-s);
     const d = new Date(timestamp);
@@ -41,16 +50,27 @@ const getFullTimestamp = (timestamp) => {
     return `${pad(d.getFullYear(),4)}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   }
 
+  /**
+   * A React-table component
+   * @param {Object[]} columns - captions, 
+   * @param {Object[]} data - the historical transactions data 
+   * @returns the JSX representation of the table populated with data
+   */
 const XPTable = ({columns, data}) => {
 
+    // Converts the raw data into human readable
     data = data.map(record => {
         return {...record, 
+            // Converts the timestamp to a human readable string
             timestamp: getFullTimestamp(record.timestamp),
+            // Returns the value in XPNETs
             value: record.value / 1000000000000000
         }
     });
 
+    // Show latest events first
     data.reverse();
+
 
     const {
         getTableProps,
