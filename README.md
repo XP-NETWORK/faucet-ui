@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# XP.network testnet Faucet UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project containt the Frontend part of the XP.network testnet Faucet UI.
+Use the faucet to add XPNET tokens to a test account.
 
 ## Available Scripts
 
@@ -39,32 +40,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Running the Faucet UI
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `yarn start`
 
-### Code Splitting
+If the faucet Backend is down you will see the following screen:
+[img]('./../public/screens/Faucet%20UI%20with%20Faucet%20BE%20being%20down.png')
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+As you can see, the faucet balance is 0. This is a clear indicator that the front end is not connected with the backend.
 
-### Analyzing the Bundle Size
+To use the full functionality of the faucet UI do the following:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. If testing locally, run a substrate local node or connect to the XP.network live testnet if testing the live functionality.
+2. Run the [faucet backend](https://github.com/xp-network/faucet-backend) (see the faucet backend documentation).
