@@ -46,7 +46,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### `yarn start`
 
 If the faucet Backend is down you will see the following screen:
-[img]('./../public/screens/Faucet%20UI%20with%20Faucet%20BE%20being%20down.png')
+![Backend down](.//public/screens/BE_being_down.png)
 
 As you can see, the faucet balance is 0. This is a clear indicator that the front end is not connected with the backend.
 
