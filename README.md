@@ -34,4 +34,4 @@ To create a production build, use yarn build.
 
 The connected view should look like so:
 
-![Backend is up](../faucet-ui/public/screens/BE_is_up.png)
+![Backend is up](.//public/screens/BE_is_up.png)
